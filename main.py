@@ -9,6 +9,8 @@ client = OpenAI(
     api_key = os.getenv("API_KEY")
 )
 
+# Global conversation array to maintain chat history
+messages = []
 
 while True:
     user_input = input("\nYou: ")
@@ -17,14 +19,25 @@ while True:
         print("Assistant: See you soon Kuchu Puchu\n")
         break
 
+    # Chat history + curretn query
+    messages.append(
+        {
+            "role": "user",
+            "content": user_input
+        }
+    )
+
     response = client.chat.completions.create(
         model = os.getenv("MODEL"),
-        messages = [
-            {
-                "role":"user",
-                "content": user_input
-            }
-        ]
+        messages = messages
+    )
+
+    # Adding the response in chat history
+    messages.append(
+        {
+            "role": "assistant",
+            "content": response.choices[0].message.content
+        }
     )
 
     print("Asisstant: "+ response.choices[0].message.content)
