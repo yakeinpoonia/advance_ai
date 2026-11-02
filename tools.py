@@ -18,3 +18,7 @@ TOOLS = [
         }
     }
 ]
+
+FUNCTION_NAME_TO_FUNCTION_MAP = {
+    "get_current_time" : get_current_time
+}
